@@ -1,9 +1,9 @@
 command! -nargs=* SearchWord :call s:search_word(<f-args>)
 command! -nargs=* SearchDefine :call s:search_define(<f-args>)
 
-let s:p_symbol = '\([a-zA-Z0-9_\[\]<?>]\+\)'
-let s:p_modifiers = '\(private\|public\|protected\|static\|final\|abstract\|synchronized\)*'
-let s:p_define = s:p_modifiers . ' ' . s:p_symbol . ' '
+let s:p_symbol = '\([a-zA-Z0-9_\[\]<?>]\+\) '
+let s:p_modifiers = '\(private \|public \|protected \|static \|final \|abstract \|synchronized \)*'
+let s:p_define = s:p_modifiers . s:p_symbol
 
 function! s:search_word(...)
     let cur_word = expand("<cword>")
