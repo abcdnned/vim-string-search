@@ -1,5 +1,7 @@
 command! -nargs=* SearchWord :call s:search_word(<f-args>)
 command! -nargs=* SearchDefine :call s:search_define(<f-args>)
+command! -nargs=* SearchImplement :call s:search_implement(<f-args>)
+command! -nargs=* SearchExtends :call s:search_extends(<f-args>)
 
 let s:p_symbol = '\([a-zA-Z0-9_\[\]<?>]\+\) '
 let s:p_modifiers = '\(private \|public \|protected \|static \|final \|abstract \|synchronized \)*'
@@ -30,9 +32,35 @@ function! s:search_define(...)
             let cur_word = a:1
         endif
     endif
-    let cur_word = s:p_define . cur_word
+    let cur_word = s:p_define . '\<' . cur_word .'\>'
     let cmd = 'vim /'.cur_word.'/j **/*.'.type
     echo cmd
     exe cmd
     exe 'copen 30'
 endfunction 
+
+function! s:search_implement(...)
+    let cur_word = expand("<cword>")
+    let type = 'java'
+    if a:0 > 0 
+        let cur_word = a:1
+    endif
+    let cur_word = 'implements '.cur_word
+    let cmd = 'vim /'.cur_word.'/j **/*.'.type
+    echo cmd
+    exe cmd
+    exe 'copen 30'
+endfunction
+
+function! s:search_extends(...)
+    let cur_word = expand("<cword>")
+    let type = 'java'
+    if a:0 > 0 
+        let cur_word = a:1
+    endif
+    let cur_word = 'extends '.cur_word
+    let cmd = 'vim /'.cur_word.'/j **/*.'.type
+    echo cmd
+    exe cmd
+    exe 'copen 30'
+endfunction
